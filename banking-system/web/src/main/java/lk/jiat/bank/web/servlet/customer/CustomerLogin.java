@@ -1,4 +1,4 @@
-package lk.jiat.bank.web.servlet;
+package lk.jiat.bank.web.servlet.customer;
 
 
 import jakarta.inject.Inject;

@@ -27,8 +27,8 @@ public class AppIdentityStore implements IdentityStore {
     public CredentialValidationResult validate(Credential credential) {
         if (credential instanceof UsernamePasswordCredential) {
             UsernamePasswordCredential upc = (UsernamePasswordCredential) credential;
-            String email = upc.getCaller();
-            String password = upc.getPasswordAsString();
+//            String email = upc.getCaller();
+//            String password = upc.getPasswordAsString();
 
             // First check if this is an admin
             if (adminService.validate(upc.getCaller(), upc.getPasswordAsString())){

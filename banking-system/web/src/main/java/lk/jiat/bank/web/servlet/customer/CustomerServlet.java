@@ -1,11 +1,10 @@
-package lk.jiat.bank.web.servlet;
+package lk.jiat.bank.web.servlet.customer;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.util.List;
 
 import lk.jiat.bank.core.entities.Customer;
 import lk.jiat.bank.core.service.CustomerService;

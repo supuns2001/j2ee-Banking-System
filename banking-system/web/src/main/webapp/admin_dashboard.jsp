@@ -2,6 +2,8 @@
 <%@ page import="lk.jiat.bank.core.service.CustomerService" %>
 <%@ page import="lk.jiat.bank.core.entities.Customer" %>
 <%@ page import="java.util.List" %>
+<%@ page import="lk.jiat.bank.core.service.AccountService" %>
+<%@ page import="lk.jiat.bank.core.entities.BankAccount" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -31,7 +33,45 @@
     th {
         background-color: #f2f2f2;
     }
+
+    form {
+        margin-top: 30px;
+    }
+
+    label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    input, select {
+        padding: 6px;
+        width: 300px;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
 </style>
+
+<div style="display: flex; gap: 20px; margin-bottom: 20px;">
+    <form action="admin_create_account.jsp" method="get">
+        <button type="submit">Create Customer New Account</button>
+    </form>
+
+    <form action="customer_form.jsp" method="get">
+        <button type="submit">Register New Customer</button>
+    </form>
+</div>
 
 <table>
     <tr>
@@ -51,5 +91,35 @@
         }
     %>
 </table>
+
+<%
+    // Lookup AccountService
+    AccountService accountService = (AccountService) ctx.lookup("lk.jiat.bank.core.service.AccountService");
+    List<BankAccount> accountList = accountService.getAllAccounts();
+%>
+
+<h2>Account Details</h2>
+<table>
+    <tr>
+        <th>Account Number</th>
+        <th>Customer Name</th>
+        <th>Account Type</th>
+        <th>Balance</th>
+    </tr>
+    <%
+        for (BankAccount acc : accountList) {
+    %>
+    <tr>
+        <td><%= acc.getAccountNumber() %></td>
+        <td><%= acc.getCustomer().getFullName() %></td>
+        <td><%= acc.getAccountType() %></td>
+        <td><%= acc.getBalance() %></td>
+    </tr>
+    <%
+        }
+    %>
+</table>
+
+
 </body>
 </html>

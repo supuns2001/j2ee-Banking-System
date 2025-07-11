@@ -4,7 +4,7 @@
         <jta-data-source>j2ee_bank_system</jta-data-source>
         <class>lk.jiat.bank.core.entities.Customer</class>
         <class>lk.jiat.bank.core.entities.Admin</class>
-        <!--        <shared-cache-mode>NONE</shared-cache-mode>-->
+                <shared-cache-mode>NONE</shared-cache-mode>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
             <property name="jakarta.persistence.sharedCache.mode" value="NONE"/>
