@@ -11,6 +11,7 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "Customer.findByEmail", query = "select c from Customer c where c.email =:email"),
         @NamedQuery(name = "Customer.findByEmailAndPassword", query = "select c from Customer c where c.email =:email and c.password=:password"),
+        @NamedQuery(name = "Customer.findAll", query = "select c from Customer c")
 })
 public class Customer implements Serializable {
 

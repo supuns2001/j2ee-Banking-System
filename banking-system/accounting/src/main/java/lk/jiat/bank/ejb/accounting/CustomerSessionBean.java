@@ -61,4 +61,13 @@ public class CustomerSessionBean implements CustomerService {
 
         return u != null;
     }
+
+    @Override
+    public List<Customer> getAllUsers() {
+        List<Customer> customers = em.createNamedQuery("Customer.findAll", Customer.class)
+                .getResultList();
+
+        System.out.println("customer list is :"+customers);
+        return customers;
+    }
 }

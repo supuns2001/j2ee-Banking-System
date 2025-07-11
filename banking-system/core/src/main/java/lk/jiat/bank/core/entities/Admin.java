@@ -2,9 +2,15 @@ package lk.jiat.bank.core.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "admin")
-public class Admin {
+@NamedQueries({
+        @NamedQuery(name = "Admin.findByEmail", query = "SELECT a FROM Admin a WHERE a.email = :email"),
+        @NamedQuery(name = "Admin.findByEmailAndPassword", query = "SELECT a FROM Admin a WHERE a.email = :email AND a.password = :password")
+})
+public class Admin implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

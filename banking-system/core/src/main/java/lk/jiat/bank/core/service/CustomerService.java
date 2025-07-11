@@ -15,5 +15,6 @@ public interface CustomerService {
     void deleteUser(Customer user );
 
     boolean validate(String email , String password);
+    List<Customer> getAllUsers();
 
 }

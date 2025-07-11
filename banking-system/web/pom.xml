@@ -42,6 +42,15 @@
         </dependency>
 
         <dependency>
+            <groupId>lk.jiat.app</groupId>
+            <artifactId>auth</artifactId>
+            <version>1.0</version>
+            <type>ejb-client</type>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
             <version>3.0.1</version>
