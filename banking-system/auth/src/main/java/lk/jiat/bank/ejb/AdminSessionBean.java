@@ -44,13 +44,21 @@ public class AdminSessionBean implements AdminService {
     @Override
     public boolean validate(String email, String encryptedPassword) {
 
-        System.out.println("Admin session Bean  details :"+email + " "+ encryptedPassword);
-        Admin a = em.createNamedQuery("Admin.findByEmailAndPassword",Admin.class)
-                .setParameter("email", email)
-                .setParameter("password",encryptedPassword)
-                .getSingleResult();
-        System.out.println("user is ;"+a.getName());
+        try {
 
-        return a != null;
+            System.out.println("Admin session Bean  details :"+email + " "+ encryptedPassword);
+            Admin a = em.createNamedQuery("Admin.findByEmailAndPassword",Admin.class)
+                    .setParameter("email", email)
+                    .setParameter("password",encryptedPassword)
+                    .getSingleResult();
+            System.out.println("Admin is ;"+a.getName());
+
+            return a != null;
+
+        } catch (Exception e) {
+            System.out.println("Admin is not found");
+            return false;
+        }
+
     }
 }

@@ -37,7 +37,7 @@
             <groupId>lk.jiat.app</groupId>
             <artifactId>accounting</artifactId>
             <version>1.0</version>
-            <type>ejb-client</type>
+            <type>ejb</type>
             <scope>provided</scope>
         </dependency>
 
@@ -45,7 +45,14 @@
             <groupId>lk.jiat.app</groupId>
             <artifactId>auth</artifactId>
             <version>1.0</version>
-            <type>ejb-client</type>
+            <type>ejb</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>lk.jiat.app</groupId>
+            <artifactId>scheduler</artifactId>
+            <version>1.0</version>
+            <type>ejb</type>
             <scope>provided</scope>
         </dependency>
 

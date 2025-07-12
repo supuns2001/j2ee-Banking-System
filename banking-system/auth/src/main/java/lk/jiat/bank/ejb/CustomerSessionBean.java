@@ -1,10 +1,9 @@
-package lk.jiat.bank.ejb.accounting;
+package lk.jiat.bank.ejb;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jdk.jfr.StackTrace;
 import lk.jiat.bank.core.entities.Customer;
 import lk.jiat.bank.core.service.CustomerService;
 
@@ -51,15 +50,23 @@ public class CustomerSessionBean implements CustomerService {
     @Override
     public boolean validate(String email, String password) {
 
-        System.out.println("session Bean  details :"+email + " "+ password);
+        try {
 
-        Customer u = em.createNamedQuery("Customer.findByEmailAndPassword",Customer.class)
-                .setParameter("email", email)
-                .setParameter("password",password)
-                .getSingleResult();
-//        System.out.println("user is ;"+u.getFullName());
+            System.out.println("session Bean  details :"+email + " "+ password);
 
-        return u != null;
+            Customer u = em.createNamedQuery("Customer.findByEmailAndPassword",Customer.class)
+                    .setParameter("email", email)
+                    .setParameter("password",password)
+                    .getSingleResult();
+        System.out.println("user is ;"+u.getFullName());
+
+            return u != null;
+
+        } catch (Exception e) {
+            System.out.println("customer not found");
+            return false;
+        }
+
     }
 
     @Override

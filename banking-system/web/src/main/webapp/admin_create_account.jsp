@@ -48,6 +48,9 @@
     <label for="balance">Initial Balance:</label>
     <input type="number" step="0.01" name="balance" id="balance" required />
     <br><br>
+    <label for="interestRate">Annual Interest Rate (%):</label>
+    <input type="number" step="0.01" name="interestRate" id="interestRate" required />
+    <br><br>
 
     <button type="submit">Create Account</button>
 </form>

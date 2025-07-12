@@ -41,7 +41,7 @@ public class CustomerLogin extends HttpServlet {
 
         if (status == AuthenticationStatus.SUCCESS) {
             System.out.println("Authentication successful");
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/customerDashboard");
         } else {
             System.out.println("Authentication failed");
 //            throw new LoginFailedException("Invalid email or password");
