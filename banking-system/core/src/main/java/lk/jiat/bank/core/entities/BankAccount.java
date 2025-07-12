@@ -37,18 +37,23 @@ public class BankAccount implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @Column(nullable = false)
+    private BigDecimal interestRate;
+
     public BankAccount() {
         this.createdAt = LocalDateTime.now();
         this.balance = BigDecimal.ZERO;
     }
 
-    public BankAccount(String accountNumber, AccountType accountType, BigDecimal balance, Customer customer) {
+    public BankAccount(String accountNumber, AccountType accountType, BigDecimal balance, BigDecimal interestRate, Customer customer) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
+        this.interestRate = interestRate;
         this.customer = customer;
         this.createdAt = LocalDateTime.now();
     }
+
 
     public Long getId() {
         return id;
@@ -97,4 +102,14 @@ public class BankAccount implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
+    }
+
+
+
 }

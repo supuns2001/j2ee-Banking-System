@@ -33,10 +33,13 @@ public class CreateAccountServlet extends HttpServlet {
             Customer customer = customerService.getUserById(customerId);
             AccountType accountType = AccountType.valueOf(accountTypeStr);
 
+            double interestRate = Double.parseDouble(request.getParameter("interestRate"));
+
             BankAccount account = new BankAccount();
             account.setAccountNumber(accountNumber);
             account.setAccountType(accountType);
             account.setBalance(BigDecimal.valueOf(balance));
+            account.setInterestRate(BigDecimal.valueOf(interestRate));
             account.setCustomer(customer);
 
             accountService.createAccount(account);
