@@ -1,11 +1,10 @@
 package lk.jiat.bank.scheduler.interest;
 
-import jakarta.ejb.Schedule;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
+import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.BankAccount;
+import lk.jiat.bank.core.service.AccountService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,24 +13,27 @@ import java.util.List;
 @Startup
 public class InterestSchedulerBean {
 
-    @PersistenceContext
-    private EntityManager em;
+    @EJB
+    private AccountService accountService;
 
-    // Runs at midnight on the 1st day of each month
-    @Schedule(dayOfMonth = "1", hour = "0", minute = "0", second = "0", persistent = false)
-    public void applyMonthlyInterest() {
-        List<BankAccount> accounts = em.createNamedQuery("BankAccount.findAll", BankAccount.class).getResultList();
+    //    @Schedule(dayOfMonth = "Last", hour = "23", minute = "59", persistent = false)
+//    @Schedule(minute = "*/1", hour = "*", persistent = false)
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void updateMonthlyInterest() {
+        List<BankAccount> accounts = accountService.getAllAccounts();
 
         for (BankAccount account : accounts) {
-            BigDecimal annualRate = account.getInterestRate();
-            if (annualRate != null && annualRate.compareTo(BigDecimal.ZERO) > 0) {
-                // Monthly rate = annualRate / 12
-                BigDecimal monthlyRate = annualRate.divide(BigDecimal.valueOf(12), 10, BigDecimal.ROUND_HALF_UP);
-                BigDecimal interest = account.getBalance().multiply(monthlyRate).divide(BigDecimal.valueOf(100), 10, BigDecimal.ROUND_HALF_UP);
-                account.setBalance(account.getBalance().add(interest));
-                em.merge(account); // Update with new balance
-            }
-        }
-    }
+            BigDecimal balance = account.getBalance();
+            BigDecimal interestRate = account.getInterestRate();
 
+            // Calculate interest: balance * (rate / 100)
+            BigDecimal interest = balance.multiply(interestRate).divide(BigDecimal.valueOf(100));
+
+            account.setBalance(balance.add(interest));
+            accountService.updateAccount(account);
+        }
+
+        System.out.println("Monthly Interest Update Completed.");
+    }
 }
+
