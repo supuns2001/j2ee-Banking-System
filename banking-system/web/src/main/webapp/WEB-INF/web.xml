@@ -4,5 +4,64 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!-- Restrict customer dashboard to CUSTOMER role -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Customer Dashboard</web-resource-name>
+            <url-pattern>/customerDashboard</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CUSTOMER</role-name>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Customer Pages</web-resource-name>
+            <url-pattern>/customer_dashboard.jsp</url-pattern>
+            <url-pattern>/transfer_other.jsp</url-pattern>
+            <url-pattern>/transfer_own.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CUSTOMER</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin Area</web-resource-name>
+            <url-pattern>/customers</url-pattern>
+<!--            <url-pattern>/admin_login</url-pattern>-->
+            <url-pattern>/CreateAccountServlet</url-pattern>
+            <url-pattern>/toggleAccountStatus</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin Pages</web-resource-name>
+            <url-pattern>/admin_dashboard.jsp</url-pattern>
+            <url-pattern>/customer_form.jsp</url-pattern>
+            <url-pattern>/admin_create_account.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-role>
+        <role-name>ADMIN</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>CUSTOMER</role-name>
+    </security-role>
+
 
 </web-app>
