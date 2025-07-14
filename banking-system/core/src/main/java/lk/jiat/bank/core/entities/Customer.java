@@ -13,7 +13,7 @@ import java.io.Serializable;
         @NamedQuery(name = "Customer.findByEmailAndPassword", query = "select c from Customer c where c.email =:email and c.password=:password"),
         @NamedQuery(name = "Customer.findAll", query = "select c from Customer c")
 })
-@Cacheable(value = false)
+@Cacheable(false)
 public class Customer implements Serializable {
 
     @Id
