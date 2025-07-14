@@ -1,4 +1,4 @@
-package lk.jiat.bank.web.servlet.customer;
+package lk.jiat.bank.web.servlet.admin;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;

@@ -1,6 +1,8 @@
 package lk.jiat.bank.ejb;
 
 import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.Admin;
@@ -17,6 +19,7 @@ public class AdminSessionBean implements AdminService {
         return em.find(Admin.class, id);
     }
 
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     @Override
     public Admin getAdminByEmail(String email) {
             return em.createNamedQuery("Admin.findByEmail", Admin.class).setParameter("email", email).getSingleResult();
@@ -41,6 +44,7 @@ public class AdminSessionBean implements AdminService {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public boolean validate(String email, String encryptedPassword) {
 

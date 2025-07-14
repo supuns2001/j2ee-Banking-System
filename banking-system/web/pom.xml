@@ -55,6 +55,13 @@
             <type>ejb</type>
             <scope>provided</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>lk.jiat.app</groupId>-->
+<!--            <artifactId>interceptor</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <type>ejb</type>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 
 
         <dependency>

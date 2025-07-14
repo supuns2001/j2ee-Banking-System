@@ -105,6 +105,8 @@
         <th>Customer Name</th>
         <th>Account Type</th>
         <th>Balance</th>
+        <th>Status</th>
+        <th>Action</th>
     </tr>
     <%
         for (BankAccount acc : accountList) {
@@ -114,6 +116,15 @@
         <td><%= acc.getCustomer().getFullName() %></td>
         <td><%= acc.getAccountType() %></td>
         <td><%= acc.getBalance() %></td>
+        <td><%= acc.isActive() ? "Active" : "Deactivated" %></td>
+        <td>
+            <form action="${pageContext.request.contextPath}/toggleAccountStatus" method="post" style="display:inline;">
+            <input type="hidden" name="accountNumber" value="<%= acc.getAccountNumber() %>" />
+                <button type="submit">
+                    <%= acc.isActive() ? "Deactivate" : "Activate" %>
+                </button>
+            </form>
+        </td>
     </tr>
     <%
         }

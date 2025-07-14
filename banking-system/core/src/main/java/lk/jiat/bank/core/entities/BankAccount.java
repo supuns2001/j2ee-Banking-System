@@ -40,6 +40,10 @@ public class BankAccount implements Serializable {
     @Column(nullable = false)
     private BigDecimal interestRate;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
+
     public BankAccount() {
         this.createdAt = LocalDateTime.now();
         this.balance = BigDecimal.ZERO;
@@ -109,6 +113,16 @@ public class BankAccount implements Serializable {
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
     }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
 
 
 

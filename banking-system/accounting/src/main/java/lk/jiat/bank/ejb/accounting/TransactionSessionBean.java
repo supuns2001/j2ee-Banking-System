@@ -1,6 +1,9 @@
 package lk.jiat.bank.ejb.accounting;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.BankAccount;
@@ -17,22 +20,27 @@ public class TransactionSessionBean implements TransactionService {
     @PersistenceContext
     private EntityManager em;
 
+    @RolesAllowed({"CUSTOMER", "ADMIN"})
     @Override
     public void addTransaction(Transaction transaction) {
         em.persist(transaction);
     }
 
+    @RolesAllowed({"CUSTOMER", "ADMIN"})
     @Override
     public List<Transaction> getTransactionByAccountList(Long accountId) {
       return em.createNamedQuery("Transaction.findByAccountId", Transaction.class).setParameter("accountId", accountId).getResultList();
     }
 
+    @RolesAllowed({"ADMIN"})
     @Override
     public List<Transaction> getAllTransactions() {
         return em.createNamedQuery("Transaction.findAll", Transaction.class).getResultList();
     }
 
+    @RolesAllowed({"CUSTOMER", "ADMIN"})
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void transferAccount(String sourceAccountNumber, String destinationAccountNumber, double amount) throws Exception {
 
         BankAccount from = em.createQuery("SELECT a FROM BankAccount a WHERE a.accountNumber = :num", BankAccount.class)

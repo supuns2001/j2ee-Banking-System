@@ -49,6 +49,13 @@
             <type>ejb</type>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>lk.jiat.app</groupId>-->
+<!--            <artifactId>interceptor</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <type>ejb</type>-->
+<!--        </dependency>-->
+
 
         <dependency>
             <groupId>lk.jiat.app</groupId>
@@ -80,6 +87,11 @@
                             <artifactId>auth</artifactId>
                             <bundleFileName>auth-module.jar</bundleFileName>
                         </ejbModule>
+<!--                        <ejbModule>-->
+<!--                            <groupId>lk.jiat.app</groupId>-->
+<!--                            <artifactId>interceptor</artifactId>-->
+<!--                            <bundleFileName>interceptor-module.jar</bundleFileName>-->
+<!--                        </ejbModule>-->
 
                         <ejbModule>
                             <groupId>lk.jiat.app</groupId>

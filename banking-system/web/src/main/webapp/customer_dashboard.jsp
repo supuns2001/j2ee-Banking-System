@@ -186,7 +186,7 @@
                 <div class="card">
                     <h4>Account #: ${acc.accountNumber}</h4>
                     <p><strong>Type:</strong> ${acc.accountType}</p>
-                    <p><strong>Balance:</strong> $${acc.balance}</p>
+                    <p><strong>Balance:</strong> LKR. ${acc.balance}</p>
                     <p><strong>Created:</strong> ${acc.createdAt}</p>
                 </div>
             </c:forEach>
@@ -209,7 +209,7 @@
             <tr>
                 <th>From Account</th>
                 <th>To Account</th>
-                <th>Amount</th>
+                <th>Amount(LKR)</th>
                 <th>Type</th>
                 <th>Date</th>
             </tr>
@@ -219,7 +219,7 @@
                 <tr>
                     <td>${txn.fromAccount.accountNumber}</td>
                     <td>${txn.toAccount.accountNumber}</td>
-                    <td>$${txn.amount}</td>
+                    <td>${txn.amount}</td>
                     <td>${txn.type}</td>
                     <td>${txn.timestamp}</td>
                 </tr>

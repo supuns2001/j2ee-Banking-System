@@ -2,6 +2,8 @@ package lk.jiat.bank.ejb;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.Customer;
@@ -22,6 +24,7 @@ public class CustomerSessionBean implements CustomerService {
         return userId;
     }
 
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     @Override
     public Customer getUserByEmail(String email) {
         return em.createNamedQuery("Customer.findByEmail", Customer.class).setParameter("email", email).getSingleResult();
@@ -33,20 +36,21 @@ public class CustomerSessionBean implements CustomerService {
         em.persist(user);
     }
 
-    @RolesAllowed({"CUSTOMER","ADMIN","SUPER_ADMIN"})
+    @RolesAllowed({"CUSTOMER","ADMIN"})
     @Override
     public void updateUser(Customer user) {
 
         em.merge(user);
     }
 
-    @RolesAllowed({"CUSTOMER","ADMIN","SUPER_ADMIN"})
+    @RolesAllowed({"CUSTOMER","ADMIN"})
     @Override
     public void deleteUser(Customer user) {
 
         em.remove(user);
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     @Override
     public boolean validate(String email, String password) {
 
