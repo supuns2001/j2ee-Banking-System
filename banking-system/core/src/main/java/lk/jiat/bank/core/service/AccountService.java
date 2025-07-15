@@ -15,4 +15,7 @@ public interface AccountService {
     BankAccount getAccountByNumber(String accountNumber);
     List<BankAccount> getAccountsByCustomer(Customer customer);
     List<BankAccount> getAllAccounts();
+    public int getTotalAccountCount();
+    public double getTotalBalance();
+    public double getMonthlyCollection();
 }

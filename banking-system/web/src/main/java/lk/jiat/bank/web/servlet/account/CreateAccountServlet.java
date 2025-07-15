@@ -48,7 +48,10 @@ public class CreateAccountServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write("Error creating account: " + e.getMessage());
+            // Forward to error.jsp with error details
+            request.setAttribute("jakarta.servlet.error.message", e.getMessage());
+            request.setAttribute("jakarta.servlet.error.exception", e);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
 
         }

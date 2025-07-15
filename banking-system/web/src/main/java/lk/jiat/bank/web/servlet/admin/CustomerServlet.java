@@ -33,13 +33,22 @@ public class CustomerServlet extends HttpServlet {
 
 
         Customer customer = new Customer(name, email, phone, address, encrypt);
+        try {
+            // Send verification email
+            VerificationMail mail = new VerificationMail(email, password);
+            MailServiceProvider.getInstance().sendMail(mail);
 
-//        String verificationCode = UUID.randomUUID().toString();
-        VerificationMail mail = new VerificationMail(email , password);
-        MailServiceProvider.getInstance().sendMail(mail);
+            // Persist customer (this may trigger interceptor validation)
+            customerBean.addUser(customer);
 
-        customerBean.addUser(customer);
+            resp.sendRedirect("admin_dashboard.jsp");
 
-        resp.sendRedirect("index.jsp");
+        } catch (Exception ex) {
+            // Log and forward to error page
+            ex.printStackTrace();
+            req.setAttribute("jakarta.servlet.error.message", ex.getMessage());
+            req.setAttribute("jakarta.servlet.error.exception", ex);
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+        }
     }
 }

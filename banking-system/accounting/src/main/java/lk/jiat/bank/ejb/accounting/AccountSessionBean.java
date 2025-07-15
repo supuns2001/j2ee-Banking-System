@@ -10,6 +10,8 @@ import lk.jiat.bank.core.entities.BankAccount;
 import lk.jiat.bank.core.entities.Customer;
 import lk.jiat.bank.core.service.AccountService;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Stateless
@@ -57,5 +59,32 @@ public class AccountSessionBean implements AccountService {
     public List<BankAccount> getAllAccounts() {
         return em.createNamedQuery("BankAccount.findAll", BankAccount.class)
                 .getResultList();
+    }
+
+    @Override
+    public int getTotalAccountCount() {
+        return getAllAccounts().size();
+    }
+
+    @Override
+    public double getTotalBalance() {
+        return getAllAccounts().stream()
+                .map(BankAccount::getBalance)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .doubleValue();
+    }
+
+    @Override
+    public double getMonthlyCollection() {
+        LocalDate now = LocalDate.now();
+        int currentMonth = now.getMonthValue();
+        int currentYear = now.getYear();
+
+        return getAllAccounts().stream()
+                .filter(acc -> acc.getCreatedAt().getMonthValue() == currentMonth &&
+                        acc.getCreatedAt().getYear() == currentYear)
+                .map(BankAccount::getBalance)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .doubleValue();
     }
 }

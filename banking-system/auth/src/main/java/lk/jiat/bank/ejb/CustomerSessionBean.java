@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.Customer;
 import lk.jiat.bank.core.service.CustomerService;
+import lk.jiat.bank.ejb.interceptors.annotation.CustomerRegister;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class CustomerSessionBean implements CustomerService {
 
     }
 
+    @CustomerRegister
     @Override
     public void addUser(Customer user) {
         em.persist(user);

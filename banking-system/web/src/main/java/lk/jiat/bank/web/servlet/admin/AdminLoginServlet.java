@@ -22,29 +22,37 @@ public class AdminLoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
+            System.out.println("admin login is :" + email + " " + password);
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+            AuthenticationParameters parameters = AuthenticationParameters.withParams()
+                    .credential(new UsernamePasswordCredential(email, Encryption.encrypt(password)));
 
-        System.out.println("admin login is :"+email + " "+ password);
+            AuthenticationStatus status = securityContext.authenticate(request, response, parameters);
 
-        AuthenticationParameters parameters = AuthenticationParameters.withParams()
-                .credential(new UsernamePasswordCredential(email, Encryption.encrypt(password)));
+            System.out.println("Admin status is :" + status);
 
+            if (status == AuthenticationStatus.SUCCESS) {
+                System.out.println("Admin Authentication successful");
+                response.sendRedirect(request.getContextPath() + "/admin_dashboard.jsp");
+            } else {
+                System.out.println("Admin Authentication failed");
+                // Forward to error.jsp with message
+                request.setAttribute("jakarta.servlet.error.message", "Invalid email or password.");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+            }
 
+        } catch (Exception e) {
+            // Log the exception
+            e.printStackTrace();
 
-        AuthenticationStatus status = securityContext.authenticate(request, response, parameters);
-
-        System.out.println("Admin status is :"+ status);
-
-        if (status == AuthenticationStatus.SUCCESS) {
-            System.out.println("Admin Authentication successful");
-            response.sendRedirect(request.getContextPath() + "/admin_dashboard.jsp");
-        } else {
-            System.out.println("Admin Authentication failed");
-//            throw new LoginFailedException("Invalid email or password");
+            // Forward to error.jsp with exception details
+            request.setAttribute("jakarta.servlet.error.message", "Unexpected error during login: " + e.getMessage());
+            request.setAttribute("jakarta.servlet.error.exception", e);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
-
     }
 }

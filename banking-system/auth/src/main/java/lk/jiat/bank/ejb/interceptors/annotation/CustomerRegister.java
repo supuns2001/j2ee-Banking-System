@@ -1,4 +1,4 @@
-package lk.jiat.bank.core.interceptors.anotation;
+package lk.jiat.bank.ejb.interceptors.annotation;
 
 import jakarta.interceptor.InterceptorBinding;
 
@@ -10,8 +10,6 @@ import java.lang.annotation.Target;
 @InterceptorBinding
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LoginLogger {
-
-
+public @interface CustomerRegister {
 
 }

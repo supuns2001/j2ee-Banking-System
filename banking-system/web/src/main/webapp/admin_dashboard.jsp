@@ -14,8 +14,17 @@
 
 <%
     InitialContext ctx = new InitialContext();
+
     CustomerService customerService = (CustomerService) ctx.lookup("lk.jiat.bank.core.service.CustomerService");
+    AccountService accountService = (AccountService) ctx.lookup("lk.jiat.bank.core.service.AccountService");
+
     List<Customer> customerList = customerService.getAllUsers();
+
+    int totalAccounts = accountService.getTotalAccountCount();
+    double totalBalance = accountService.getTotalBalance();
+    double monthlyBalance = accountService.getMonthlyCollection();
+
+    List<BankAccount> accountList = accountService.getAllAccounts(); // ✅ Already defined here
 %>
 
 <style>
@@ -63,6 +72,13 @@
     }
 </style>
 
+<div style="margin-bottom: 20px; padding: 15px; background-color: #e9f5ff; border: 1px solid #b3d9ff;">
+    <h3>Summary</h3>
+    <p><strong>Total Accounts:</strong> <%= totalAccounts %></p>
+    <p><strong>Total Collection:</strong> Rs. <%= totalBalance %></p>
+    <p><strong>Monthly Collection:</strong> Rs. <%= monthlyBalance %></p>
+</div>
+
 <div style="display: flex; gap: 20px; margin-bottom: 20px;">
     <form action="admin_create_account.jsp" method="get">
         <button type="submit">Create Customer New Account</button>
@@ -73,6 +89,7 @@
     </form>
 </div>
 
+<h2>Customer List</h2>
 <table>
     <tr>
         <th>Full Name</th>
@@ -91,12 +108,6 @@
         }
     %>
 </table>
-
-<%
-    // Lookup AccountService
-    AccountService accountService = (AccountService) ctx.lookup("lk.jiat.bank.core.service.AccountService");
-    List<BankAccount> accountList = accountService.getAllAccounts();
-%>
 
 <h2>Account Details</h2>
 <table>
@@ -119,7 +130,7 @@
         <td><%= acc.isActive() ? "Active" : "Deactivated" %></td>
         <td>
             <form action="${pageContext.request.contextPath}/toggleAccountStatus" method="post" style="display:inline;">
-            <input type="hidden" name="accountNumber" value="<%= acc.getAccountNumber() %>" />
+                <input type="hidden" name="accountNumber" value="<%= acc.getAccountNumber() %>" />
                 <button type="submit">
                     <%= acc.isActive() ? "Deactivate" : "Activate" %>
                 </button>
@@ -130,7 +141,6 @@
         }
     %>
 </table>
-
 
 </body>
 </html>

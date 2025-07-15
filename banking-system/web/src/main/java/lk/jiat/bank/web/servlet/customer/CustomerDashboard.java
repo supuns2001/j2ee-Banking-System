@@ -37,38 +37,38 @@ public class CustomerDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("customer dashboard servlet");
+        try {
+            System.out.println("customer dashboard servlet");
 
-        Principal principal = request.getUserPrincipal();
+            Principal principal = request.getUserPrincipal();
 
-        if (principal != null) {
-            String email = principal.getName();
+            if (principal != null) {
+                String email = principal.getName();
 
-            Customer customer = customerService.getUserByEmail(email);
+                Customer customer = customerService.getUserByEmail(email);
 
-            if (customer != null) {
-                // Get accounts
-                List<BankAccount> accounts = accountService.getAccountsByCustomer(customer);
+                if (customer != null) {
+                    List<BankAccount> accounts = accountService.getAccountsByCustomer(customer);
+                    List<Transaction> transactions = transactionService.getTransactionByAccountList(customer.getId());
 
-                System.out.println("Accounts found: " + accounts.size());
-                for (BankAccount acc : accounts) {
-                    System.out.println("Account: " + acc.getAccountNumber() + ", Balance: " + acc.getBalance());
+                    request.setAttribute("customer", customer);
+                    request.setAttribute("accounts", accounts);
+                    request.setAttribute("transactions", transactions);
+                    request.getRequestDispatcher("/customer_dashboard.jsp").forward(request, response);
+                } else {
+                    // Handle user not found
+                    request.setAttribute("jakarta.servlet.error.message", "Customer not found with email: " + email);
+                    request.getRequestDispatcher("/error.jsp").forward(request, response);
                 }
-
-                // Get transactions for customer
-                List<Transaction> transactions = transactionService.getTransactionByAccountList(customer.getId());
-                System.out.println("Transactions found: " + transactions.size());
-
-                // Set attributes and forward to JSP
-                request.setAttribute("customer", customer);
-                request.setAttribute("accounts", accounts);
-                request.setAttribute("transactions", transactions);
-                request.getRequestDispatcher("/customer_dashboard.jsp").forward(request, response);
             } else {
-                response.sendRedirect(request.getContextPath() + "/login.jsp?error=user_not_found");
+                response.sendRedirect(request.getContextPath() + "/login.jsp");
             }
-        } else {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("jakarta.servlet.error.message", "An unexpected error occurred: " + e.getMessage());
+            request.setAttribute("jakarta.servlet.error.exception", e);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }
