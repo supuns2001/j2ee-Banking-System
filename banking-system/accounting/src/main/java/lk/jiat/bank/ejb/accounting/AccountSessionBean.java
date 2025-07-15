@@ -27,7 +27,7 @@ public class AccountSessionBean implements AccountService {
         em.persist(account);
     }
 
-    @RolesAllowed({"ADMIN"})
+    @RolesAllowed({"ADMIN", "CUSTOMER"})
     @Override
     public void updateAccount(BankAccount account) {
         em.merge(account);
@@ -55,7 +55,7 @@ public class AccountSessionBean implements AccountService {
                 .getResultList();
     }
 
-    @RolesAllowed({"ADMIN"})
+    @RolesAllowed({"ADMIN", "CUSTOMER"})
     public List<BankAccount> getAllAccounts() {
         return em.createNamedQuery("BankAccount.findAll", BankAccount.class)
                 .getResultList();
