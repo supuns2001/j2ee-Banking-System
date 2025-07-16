@@ -6,6 +6,7 @@
         <class>lk.jiat.bank.core.entities.Admin</class>
         <class>lk.jiat.bank.core.entities.BankAccount</class>
         <class>lk.jiat.bank.core.entities.Transaction</class>
+        <class>lk.jiat.bank.core.entities.Loan</class>
 
                 <shared-cache-mode>NONE</shared-cache-mode>
         <properties>

@@ -4,6 +4,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="lk.jiat.bank.core.service.AccountService" %>
 <%@ page import="lk.jiat.bank.core.entities.BankAccount" %>
+<%@ page import="lk.jiat.bank.core.entities.Loan" %>
+<%@ page import="lk.jiat.bank.core.service.LoanService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -189,6 +191,9 @@
         double monthlyBalance = accountService.getMonthlyCollection();
 
         List<BankAccount> accountList = accountService.getAllAccounts();
+
+        LoanService loanService = (LoanService) ctx.lookup("lk.jiat.bank.core.service.LoanService");
+        List<Loan> loanList = loanService.getAllLoans();
     %>
 
     <!-- Summary Cards -->
@@ -214,6 +219,9 @@
         </form>
         <form action="customer_form.jsp" method="get">
             <button type="submit" class="btn">Register New Customer</button>
+        </form>
+        <form action="${pageContext.request.contextPath}/addLoan" method="GET">
+            <button type="submit" class="btn">Add New Loan</button>
         </form>
     </div>
 
@@ -248,6 +256,39 @@
                         </button>
                     </form>
                 </td>
+            </tr>
+            <%
+                }
+            %>
+        </table>
+    </div>
+
+    <!-- Loan List -->
+    <h2 class="section-title">Loan Details</h2>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Loan ID</th>
+                <th>Customer</th>
+                <th>Principal</th>
+                <th>Monthly Installment</th>
+                <th>Remaining Balance</th>
+                <th>Status</th>
+                <th>Start Date</th>
+            </tr>
+            <%
+                for (Loan loan : loanList) {
+            %>
+            <tr>
+                <td><%= loan.getId() %></td>
+                <td><%= loan.getCustomer().getFullName() %></td>
+                <td>Rs. <%= loan.getPrincipal() %></td>
+                <td>Rs. <%= loan.getMonthlyInstallment() %></td>
+                <td>Rs. <%= String.format("%.2f", loan.getRemainingBalance()) %></td>
+                <td class="<%= loan.isPaid() ? "status-active" : "status-deactivated" %>">
+                    <%= loan.isPaid() ? "Paid" : "Unpaid" %>
+                </td>
+                <td><%= loan.getStartDate() %></td>
             </tr>
             <%
                 }

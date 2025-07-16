@@ -3,6 +3,7 @@ package lk.jiat.bank.core.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -28,7 +29,8 @@ public class Customer implements Serializable {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserType userType = UserType.CUSTOMER;
-
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<BankAccount> accounts;
 
     // Constructors
     public Customer() {
@@ -97,5 +99,13 @@ public class Customer implements Serializable {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public List<BankAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<BankAccount> accounts) {
+        this.accounts = accounts;
     }
 }
