@@ -173,7 +173,7 @@
     <a href="${pageContext.request.contextPath}/transferOwn">Transfer (Own)</a>
     <a href="${pageContext.request.contextPath}/transferOther">Transfer (Other)</a>
     <a href="#">Profile</a>
-    <a href="#">Logout</a>
+    <a href="#" onclick="showLogoutConfirm(event)">Logout</a>
 </div>
 
 <div class="main">
@@ -230,4 +230,60 @@
 </div>
 
 </body>
+
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+">
+    <div style="
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    ">
+        <h3>Are you sure you want to log out?</h3>
+        <div style="margin-top: 20px;">
+            <form action="${pageContext.request.contextPath}/logout" method="POST" style="display:inline;">
+                <button type="submit" style="
+                    background-color: #555879;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 6px;
+                    font-weight: bold;
+                    cursor: pointer;
+                ">Yes</button>
+            </form>
+            <button onclick="hideLogoutConfirm()" style="
+                background-color: #ccc;
+                color: black;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 6px;
+                font-weight: bold;
+                margin-left: 10px;
+                cursor: pointer;
+            ">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showLogoutConfirm(event) {
+        event.preventDefault();
+        document.getElementById('logoutModal').style.display = 'flex';
+    }
+
+    function hideLogoutConfirm() {
+        document.getElementById('logoutModal').style.display = 'none';
+    }
+</script>
 </html>
