@@ -1,5 +1,8 @@
 package lk.jiat.bank.core.exceptions;
 
+import jakarta.ejb.ApplicationException;
+
+@ApplicationException(rollback = true)
 public class BankApplicationException extends RuntimeException{
 
     public BankApplicationException(String message) {
