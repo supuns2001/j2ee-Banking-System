@@ -4,15 +4,16 @@
 <html>
 <head>
     <title>Transfer Between Your Accounts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
-            --primary: #555879;
-            --secondary: #98A1BC;
-            --bg-light: #F4EBD3;
-            --card-bg: #DED3C4;
+            --primary: #133E87;
+            --secondary: #608BC1;
+            --bg-light: #F3F3E0;
+            --card-bg: #CBDCEB;
             --error: #e74c3c;
-            --button: #555879;
-            --button-hover: #3e405b;
+            --button: #133E87;
+            --button-hover: #0f2e65;
         }
 
         * {
@@ -36,7 +37,7 @@
             background-color: var(--card-bg);
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 6px 12px rgba(85, 88, 121, 0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -51,16 +52,29 @@
             font-weight: 600;
         }
 
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+        }
+
         select,
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 12px;
+            padding: 12px 12px 12px 38px;
             margin-top: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--secondary);
             border-radius: 8px;
             font-size: 15px;
             background-color: white;
+            color: var(--primary);
         }
 
         textarea {
@@ -110,39 +124,51 @@
 <body>
 
 <div class="container">
-    <h2>Transfer Between Your Own Accounts</h2>
+    <h2><i class="fas fa-random"></i> Transfer Between Your Accounts</h2>
 
     <c:if test="${not empty errorMessage}">
-        <div class="error">${errorMessage}</div>
+        <div class="error"><i class="fas fa-exclamation-triangle"></i> ${errorMessage}</div>
     </c:if>
 
     <form method="POST" action="${pageContext.request.contextPath}/transferOwn">
 
         <label for="sourceAccount">From Account:</label>
-        <select id="sourceAccount" name="sourceAccount" required>
-            <option value="">-- Select source account --</option>
-            <c:forEach var="acc" items="${myAccounts}">
-                <option value="${acc.accountNumber}">
-                        ${acc.accountNumber} - LKR ${acc.balance}
-                </option>
-            </c:forEach>
-        </select>
+        <div class="input-icon">
+            <i class="fas fa-wallet"></i>
+            <select id="sourceAccount" name="sourceAccount" required>
+                <option value="">-- Select source account --</option>
+                <c:forEach var="acc" items="${myAccounts}">
+                    <option value="${acc.accountNumber}">
+                            ${acc.accountNumber} - LKR ${acc.balance}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
 
         <label for="targetAccount">To Account:</label>
-        <select id="targetAccount" name="targetAccount" required>
-            <option value="">-- Select target account --</option>
-            <c:forEach var="acc" items="${myAccounts}">
-                <option value="${acc.accountNumber}">
-                        ${acc.accountNumber} - LKR ${acc.balance}
-                </option>
-            </c:forEach>
-        </select>
+        <div class="input-icon">
+            <i class="fas fa-university"></i>
+            <select id="targetAccount" name="targetAccount" required>
+                <option value="">-- Select target account --</option>
+                <c:forEach var="acc" items="${myAccounts}">
+                    <option value="${acc.accountNumber}">
+                            ${acc.accountNumber} - LKR ${acc.balance}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
 
         <label for="amount">Amount (LKR):</label>
-        <input type="number" id="amount" name="amount" step="0.01" min="0.01" required />
+        <div class="input-icon">
+            <i class="fas fa-coins"></i>
+            <input type="number" id="amount" name="amount" step="0.01" min="0.01" required />
+        </div>
 
         <label for="note">Note (optional):</label>
-        <textarea id="note" name="note" rows="3" placeholder="Optional note..."></textarea>
+        <div class="input-icon">
+            <i class="fas fa-comment-dots"></i>
+            <textarea id="note" name="note" rows="3" placeholder="Optional note..."></textarea>
+        </div>
 
         <input type="submit" value="Transfer">
     </form>

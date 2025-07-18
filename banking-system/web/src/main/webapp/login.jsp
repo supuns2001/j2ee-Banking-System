@@ -8,7 +8,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #F4EBD3;
+            background-color: #F3F3E0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,18 +16,18 @@
         }
 
         .login-container {
-            background-color: #DED3C4;
+            background-color: #CBDCEB;
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 8px 16px rgba(85, 88, 121, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             width: 360px;
         }
 
         .login-container h1 {
             text-align: center;
-            color: #555879;
+            color: #133E87;
             margin-bottom: 24px;
-            font-size: 24px;
+            font-size: 26px;
         }
 
         .form-group {
@@ -37,7 +37,7 @@
         label {
             display: block;
             margin-bottom: 6px;
-            color: #555879;
+            color: #133E87;
             font-weight: bold;
         }
 
@@ -45,17 +45,17 @@
         input[type="password"] {
             width: 100%;
             padding: 10px;
-            border: 1px solid #98A1BC;
+            border: 1px solid #608BC1;
             border-radius: 8px;
-            background-color: #F4EBD3;
-            color: #555879;
+            background-color: #F3F3E0;
+            color: #133E87;
             font-size: 14px;
         }
 
         input[type="submit"] {
             width: 100%;
-            background-color: #555879;
-            color: #F4EBD3;
+            background-color: #133E87;
+            color: #F3F3E0;
             border: none;
             padding: 12px;
             border-radius: 8px;
@@ -66,14 +66,14 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #3e405b;
+            background-color: #0f2e65;
         }
 
         .footer {
             text-align: center;
             margin-top: 16px;
             font-size: 12px;
-            color: #98A1BC;
+            color: #608BC1;
         }
     </style>
 </head>

@@ -4,7 +4,17 @@
 <html>
 <head>
     <title>Customer Dashboard</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
+        :root {
+            --bg: #F3F3E0;
+            --primary: #133E87;
+            --accent: #608BC1;
+            --card: #CBDCEB;
+            --text: #133E87;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,38 +22,40 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #F4EBD3;
-            color: #555879;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 240px;
-            background-color: #555879;
+            width: 250px;
+            background-color: var(--primary);
             min-height: 100vh;
             padding: 30px 20px;
-            color: #F4EBD3;
+            color: var(--bg);
         }
 
         .sidebar h2 {
             margin-bottom: 40px;
-            font-size: 22px;
+            font-size: 24px;
             text-align: center;
         }
 
         .sidebar a {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 20px;
-            color: #F4EBD3;
+            color: var(--bg);
             text-decoration: none;
             font-size: 16px;
-            transition: opacity 0.3s;
+            transition: 0.3s;
         }
 
         .sidebar a:hover {
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         /* Main */
@@ -71,12 +83,12 @@
         }
 
         .card {
-            background-color: #DED3C4;
+            background-color: var(--card);
             padding: 20px;
             border-radius: 16px;
             min-width: 260px;
             flex-shrink: 0;
-            box-shadow: 0 6px 12px rgba(85, 88, 121, 0.2);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
 
         .card h4 {
@@ -87,7 +99,6 @@
         .card p {
             font-size: 14px;
             margin: 6px 0;
-            color: #555879;
         }
 
         /* Buttons */
@@ -100,19 +111,19 @@
         }
 
         .button-group button {
-            background-color: #555879;
-            color: #F4EBD3;
+            background-color: var(--accent);
+            color: white;
             border: none;
             padding: 12px 20px;
             border-radius: 8px;
             margin-right: 12px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: 0.3s;
         }
 
         .button-group button:hover {
-            background-color: #3e405b;
+            background-color: #4e78a5;
         }
 
         /* Transaction Table */
@@ -127,17 +138,17 @@
             border-collapse: collapse;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(85, 88, 121, 0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         th, td {
             padding: 14px 18px;
-            border-bottom: 1px solid #98A1BC;
+            border-bottom: 1px solid var(--accent);
         }
 
         th {
-            background-color: #98A1BC;
-            color: white;
+            background-color: var(--card);
+            color: var(--primary);
             text-align: left;
         }
 
@@ -168,12 +179,12 @@
 <body>
 
 <div class="sidebar">
-    <h2>MyBank</h2>
-    <a href="#">Dashboard</a>
-    <a href="${pageContext.request.contextPath}/transferOwn">Transfer (Own)</a>
-    <a href="${pageContext.request.contextPath}/transferOther">Transfer (Other)</a>
-    <a href="#">Profile</a>
-    <a href="#" onclick="showLogoutConfirm(event)">Logout</a>
+    <h2><i class="fa-solid fa-university"></i> MyBank</h2>
+    <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    <a href="${pageContext.request.contextPath}/transferOwn"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer (Own)</a>
+    <a href="${pageContext.request.contextPath}/transferOther"><i class="fa-solid fa-right-left"></i> Transfer (Other)</a>
+    <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+    <a href="#" onclick="showLogoutConfirm(event)"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
 </div>
 
 <div class="main">
@@ -184,7 +195,7 @@
         <div class="account-cards">
             <c:forEach var="acc" items="${accounts}">
                 <div class="card">
-                    <h4>Account #: ${acc.accountNumber}</h4>
+                    <h4><i class="fa-solid fa-wallet"></i> Account #: ${acc.accountNumber}</h4>
                     <p><strong>Type:</strong> ${acc.accountType}</p>
                     <p><strong>Balance:</strong> LKR. ${acc.balance}</p>
                     <p><strong>Created:</strong> ${acc.createdAt}</p>
@@ -195,10 +206,10 @@
 
     <div class="button-group">
         <form action="${pageContext.request.contextPath}/transferOwn" method="GET">
-            <button type="submit">Transfer to Own Account</button>
+            <button type="submit"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer to Own Account</button>
         </form>
         <form action="${pageContext.request.contextPath}/transferOther" method="GET">
-            <button type="submit">Transfer to Other Account</button>
+            <button type="submit"><i class="fa-solid fa-right-left"></i> Transfer to Other Account</button>
         </form>
     </div>
 
@@ -209,7 +220,7 @@
             <tr>
                 <th>From Account</th>
                 <th>To Account</th>
-                <th>Amount(LKR)</th>
+                <th>Amount (LKR)</th>
                 <th>Type</th>
                 <th>Date</th>
             </tr>
@@ -229,9 +240,7 @@
     </div>
 </div>
 
-</body>
-
-<!-- Logout Confirmation Modal -->
+<!-- Logout Modal -->
 <div id="logoutModal" style="
     display: none;
     position: fixed;
@@ -243,7 +252,7 @@
     align-items: center;
 ">
     <div style="
-        background: #fff;
+        background: white;
         padding: 30px;
         border-radius: 12px;
         text-align: center;
@@ -253,7 +262,7 @@
         <div style="margin-top: 20px;">
             <form action="${pageContext.request.contextPath}/logout" method="POST" style="display:inline;">
                 <button type="submit" style="
-                    background-color: #555879;
+                    background-color: var(--primary);
                     color: white;
                     padding: 10px 20px;
                     border: none;
@@ -286,4 +295,5 @@
         document.getElementById('logoutModal').style.display = 'none';
     }
 </script>
+</body>
 </html>

@@ -6,13 +6,13 @@
     <title>Transfer to Other Account</title>
     <style>
         :root {
-            --primary: #555879;
-            --secondary: #98A1BC;
-            --bg-light: #F4EBD3;
-            --card-bg: #DED3C4;
+            --primary: #133E87;
+            --secondary: #608BC1;
+            --bg-light: #F3F3E0;
+            --card-bg: #CBDCEB;
             --error: #e74c3c;
-            --button: #555879;
-            --button-hover: #3e405b;
+            --button: #133E87;
+            --button-hover: #0f2e65;
         }
 
         * {
@@ -36,7 +36,7 @@
             background-color: var(--card-bg);
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 6px 12px rgba(85, 88, 121, 0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -57,10 +57,11 @@
             width: 100%;
             padding: 12px;
             margin-top: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--secondary);
             border-radius: 8px;
             font-size: 15px;
             background-color: white;
+            color: var(--primary);
         }
 
         textarea {
