@@ -16,8 +16,8 @@ public class InterestSchedulerBean {
     @EJB
     private AccountService accountService;
 
-    //    @Schedule(dayOfMonth = "Last", hour = "23", minute = "59", persistent = false)
-//    @Schedule(minute = "*/1", hour = "*", persistent = false)
+    //    @Schedule(minute = "*/1", hour = "*", persistent = false)
+    @Schedule(dayOfMonth = "Last", hour = "23", minute = "59", persistent = false)
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void updateMonthlyInterest() {
         List<BankAccount> accounts = accountService.getAllAccounts();

@@ -19,6 +19,7 @@ public class CustomerSessionBean implements CustomerService {
     private EntityManager em;
 
 
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     @Override
     public Customer getUserById(Long id) {
         Customer userId = em.find(Customer.class , id);

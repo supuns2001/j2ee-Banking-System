@@ -1,8 +1,6 @@
 package lk.jiat.bank.ejb.accounting;
 
-import jakarta.ejb.Schedule;
-import jakarta.ejb.Singleton;
-import jakarta.ejb.Startup;
+import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.BankAccount;
@@ -22,6 +20,7 @@ public class LoanSessionBean implements LoanService {
     private EntityManager em;
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void addLoan(Loan loan) {
         loan.setStartDate(LocalDate.now());
         loan.setRemainingBalance(loan.getPrincipal());
@@ -30,6 +29,7 @@ public class LoanSessionBean implements LoanService {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<Loan> getAllLoans() {
         return em.createNamedQuery("Loan.findAll", Loan.class).getResultList();
     }
@@ -42,8 +42,9 @@ public class LoanSessionBean implements LoanService {
     }
 
     @Override
-    //@Schedule(dayOfMonth = "Last", hour = "0", minute = "0")
-    @Schedule(minute = "*/1", hour = "*", persistent = false)
+    @Schedule(dayOfMonth = "Last", hour = "0", minute = "0")
+    //@Schedule(minute = "*/1", hour = "*", persistent = false)
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deductMonthlyInstallment() {
         List<Loan> loans = getAllLoans();
 

@@ -1,5 +1,6 @@
 package lk.jiat.bank.ejb.accounting;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
@@ -27,7 +28,7 @@ public class AccountSessionBean implements AccountService {
         em.persist(account);
     }
 
-    @RolesAllowed({"ADMIN", "CUSTOMER"})
+    @PermitAll
     @Override
     public void updateAccount(BankAccount account) {
         em.merge(account);
@@ -48,14 +49,14 @@ public class AccountSessionBean implements AccountService {
                 .getSingleResult();
     }
 
-    @RolesAllowed({"ADMIN" , "CUSTOMER"})
+    @PermitAll
     public List<BankAccount> getAccountsByCustomer(Customer customer) {
         return em.createNamedQuery("BankAccount.findByCustomer", BankAccount.class)
                 .setParameter("customer", customer)
                 .getResultList();
     }
 
-    @RolesAllowed({"ADMIN", "CUSTOMER"})
+    @PermitAll
     public List<BankAccount> getAllAccounts() {
         return em.createNamedQuery("BankAccount.findAll", BankAccount.class)
                 .getResultList();
