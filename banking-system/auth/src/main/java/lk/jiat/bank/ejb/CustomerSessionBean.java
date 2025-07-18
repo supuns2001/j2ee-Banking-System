@@ -7,6 +7,7 @@ import jakarta.ejb.TransactionAttributeType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lk.jiat.bank.core.entities.Customer;
+import lk.jiat.bank.core.exceptions.CustomerNotFoundException;
 import lk.jiat.bank.core.service.CustomerService;
 import lk.jiat.bank.ejb.interceptors.annotation.CustomerRegister;
 
@@ -22,8 +23,11 @@ public class CustomerSessionBean implements CustomerService {
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     @Override
     public Customer getUserById(Long id) {
-        Customer userId = em.find(Customer.class , id);
-        return userId;
+        Customer customer = em.find(Customer.class, id);
+        if (customer == null) {
+            throw new CustomerNotFoundException("Customer with ID " + id + " not found.");
+        }
+        return customer;
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
